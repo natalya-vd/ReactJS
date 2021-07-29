@@ -1,4 +1,4 @@
-import '../scss/input-message.scss';
+import './input-message.scss';
 import { useRef, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
