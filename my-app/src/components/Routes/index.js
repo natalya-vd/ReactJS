@@ -8,6 +8,7 @@ import App from '../../App';
 import { Home } from '../../pages/Home';
 import { Chats } from '../../pages/Chats';
 import { Profile } from '../../pages/Profile';
+import { NoChat } from '../../pages/NoChat';
 
 export function Routes() {
     return(
@@ -17,22 +18,27 @@ export function Routes() {
                     <Home />
                 </Route>
 
+                {/* <Route 
+                exact 
+                path="/chats" 
+                component={App}
+                /> */}
+                    
                 <Route exact path="/chats">
                     <App />
                 </Route>
-                
-                {/* <Route path="/chats/:chatId">
-                    <Chats />
-                </Route> */}
 
                 <Route 
                 path="/chats/:chatId"
                 component={Chats}
                 />
-                    
 
                 <Route path="/profile">
                     <Profile />
+                </Route>
+
+                <Route path="/nochat">
+                    <NoChat />
                 </Route>
 
                 <Route>

@@ -26,19 +26,20 @@ export function useChats() {
         return array;
     };
 
-    // const addChat = useCallback(() => {
+    // function addChat() {        
     //     setChatList(chatList.concat({
     //         author: faker.name.firstName(),
     //         photo: faker.image.avatar(),
-    //         id: chatList.length - 1 + 1
-    //     }));
-    // });
-
-    // function deletChat(e) {
-    //     console.log(e)
-    // }
+    //         id: chatList.length + 1
+    //     })
+    //     );
+    // };
 
     return(
         chatList
     );
+
+    // return{
+    //     usersChat, addChat
+    // };
 };
