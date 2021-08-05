@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
+import { useSelector } from "react-redux";
+
+import { getMessageListSelector } from '../../store/messages/selectors';
 
 import { InputMessage } from '../../components/InputMessage';
 import { MessageList } from '../../components/MessageList';
@@ -16,43 +19,19 @@ import faker from 'faker';
 const userName1 = 'Наташа';
 const userName2 = 'Ксюша'; //робот
 const textUser = `${faker.lorem.paragraph()}`;
-const initialChats = [
-  {
-    name: 'Chat1',
-    chatId: 1,
-    messages: [{ text: "Привет", author: userName1, photo: user1 }]
-  },
-
-  {
-    name: 'Chat2',
-    chatId: 2,
-    messages: [{ text: "Привет. Как дела?", author: userName2, photo: user2 }]
-  },
-
-  {
-    name: 'Chat3',
-    chatId: 3,
-    messages: [{ text: "Привет", author: userName1, photo: user1 }]
-  },
-
-  {
-    name: 'Chat4',
-    chatId: 4,
-    messages: [{ text: "Привет. Как дела?", author: userName2, photo: user2 }]
-  },
-
-  {
-    name: 'Chat5',
-    chatId: 5,
-    messages: [{ text: "Привет", author: userName1, photo: user1 }]
-  }
-];
 
 export function Chats() {
   const { chatId } = useParams();
 
   const [value, setValue] = useState('');
-  const [messageList, setMessageList] = useState(getInitialMessage(initialChats, chatId));
+
+  const messageListInitial = useSelector(getMessageListSelector);
+
+  const [messageList, setMessageList] = useState(getInitialMessage(messageListInitial, chatId));
+
+  useEffect(() => {
+    setMessageList(getInitialMessage(messageListInitial, chatId))
+  }, [chatId]);
 
   /**
    * Следит за messageList, если добавляется сообщение, то отвечает на него
@@ -67,7 +46,7 @@ export function Chats() {
     }
   }, [messageList]);
 
-  if(getInitialMessage(initialChats, chatId) === null) {
+  if(getInitialMessage(messageListInitial, chatId) === null) {
     return <Redirect to="/nochat" />;
   };
 

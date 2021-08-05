@@ -1,41 +1,33 @@
-import { useState } from 'react';
+import { useCallback } from 'react';
+import { useSelector, useDispatch } from "react-redux";
 
 import { Chat } from '../Chat';
-import { useChats } from './hooks/useChats';
+import { createAddChat } from '../../store/chats/actions';
+import { getChatListSelector } from '../../store/chats/selectors';
 
 import List from '@material-ui/core/List';
 import { Button } from '@material-ui/core';
 import faker from 'faker';
 
 export function ChatList() {
-    const usersChatInit = useChats();
-    const [usersChat, setUsersChat] = useState(usersChatInit);
+    const usersChat = useSelector(getChatListSelector);
 
-    function addChat() {        
-        setUsersChat(
-            usersChat.concat({
-                author: faker.name.firstName(),
-                photo: faker.image.avatar(),
-                id: usersChat.length + 1
-            })
-        );
-    };
+    const dispatch = useDispatch();
 
-    function deletChat(e) {
-        setUsersChat(
-            usersChat.filter((item) => {
-                return item.id !== +e.target.ownerDocument.activeElement.id;
-            })
-        );
-    };
+    const addChat = useCallback(() => {
+        dispatch(createAddChat(faker.name.firstName(), faker.image.avatar()))
+    }, [dispatch]);
 
     return(
         <div>
-            <Button variant="outlined" color="primary" onClick={addChat}>
+            <Button 
+            variant="outlined" 
+            color="primary" 
+            onClick={addChat}>
                 Добавить чат
             </Button>
             <List>
-                {usersChat.map((item)=><Chat  itemList={item} key={item.id} deletChat={deletChat}/>)}
+                {usersChat.map((item) => <Chat  itemList={item} key={item.chatId}/>)}
             </List>
         </div>
     );

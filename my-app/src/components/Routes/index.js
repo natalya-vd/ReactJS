@@ -17,12 +17,6 @@ export function Routes() {
                 <Route exact path="/">
                     <Home />
                 </Route>
-
-                {/* <Route 
-                exact 
-                path="/chats" 
-                component={App}
-                /> */}
                     
                 <Route exact path="/chats">
                     <App />
