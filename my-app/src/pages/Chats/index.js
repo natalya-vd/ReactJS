@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { getMessageListSelector } from '../../store/messages/selectors';
+import { createAddMessage } from '../../store/messages/actions';
 
 import { InputMessage } from '../../components/InputMessage';
 import { MessageList } from '../../components/MessageList';
@@ -26,47 +27,62 @@ export function Chats() {
   const [value, setValue] = useState('');
 
   const messageListInitial = useSelector(getMessageListSelector);
+  // console.log(messageListInitial)
 
-  const [messageList, setMessageList] = useState(getInitialMessage(messageListInitial, chatId));
+  // console.log(messageListInitial[1][0]) //1 - chatId, 0-элемент
+  //Получаю сообщение из инпута и через диспатч записываю в стор
 
-  useEffect(() => {
-    setMessageList(getInitialMessage(messageListInitial, chatId))
-  }, [chatId]);
+  // const [messageList, setMessageList] = useState(getInitialMessage(messageListInitial, chatId));
+
+  // useEffect(() => {
+  //   setMessageList(getInitialMessage(messageListInitial, chatId))
+  // }, [chatId]);
+
+  
+  
+  const dispatch = useDispatch();
+//value  в action уходит пустой, проверь
+  const addMessage = useCallback(() => {
+      dispatch(createAddMessage(chatId, { text: value, author: userName1}));
+      setValue('');      
+  }, [messageListInitial, value, dispatch]);
 
   /**
    * Следит за messageList, если добавляется сообщение, то отвечает на него
    */
   useEffect(() => {
-    if(messageList.length !== 0 && messageList[messageList.length - 1].author === userName1) {
+    if(messageListInitial[chatId].length !== 0 && messageListInitial[chatId][messageListInitial[chatId].length - 1].author === userName1) {
+      console.log('В ифе')
       const time = Math.round(Math.random() * 2000);
 
       setTimeout(() => {
-        makeMessage(userName2, user2, textUser);
+        console.log('В сеттаймауте')
+        dispatch(createAddMessage(chatId, { text: textUser, author: userName2}));
       }, time);
     }
-  }, [messageList]);
+  });
 
-  if(getInitialMessage(messageListInitial, chatId) === null) {
+  if(!serchChat(messageListInitial, chatId)) {
     return <Redirect to="/nochat" />;
   };
 
-  function getInitialMessage(listChats, chatId) {
-    let message = null;
-    listChats.forEach((item) => {
-      if(item.chatId === +chatId) {
-        message = item.messages;
+  function serchChat(listChats, chatId) {
+    let message = false;
+    for(let chat in listChats) {
+      if(+chat === +chatId) {
+        message = true;
       }
-    });
+    };
     return message;
   };
 
   /**
    * Обновляет список сообщений и очищает форму ввода сообщений
    */
-  const updateMessageList = () => {
-    makeMessage(userName1, user1, value);
-    setValue('');
-  }
+  // const updateMessageList = () => {
+  //   makeMessage(userName1, user1, value);
+  //   setValue('');
+  // }
 
   /**
    * Забирает данные из формы ввода сообщения и записывает в стейт value
@@ -82,15 +98,15 @@ export function Chats() {
    * @param {string} userPhoto Ссылка на фото пользователя
    * @param {string} userText Текст пользователя
    */
-  function makeMessage(user, userPhoto, userText) {
-    setMessageList(
-      messageList.concat({
-        author: user,
-        photo: userPhoto,
-        text: userText
-      })
-    );
-  }
+  // function makeMessage(user, userPhoto, userText) {
+  //   setMessageList(
+  //     messageList.concat({
+  //       author: user,
+  //       photo: userPhoto,
+  //       text: userText
+  //     })
+  //   );
+  // }
 
   return (
     <Container maxWidth="lg" >
@@ -100,9 +116,10 @@ export function Chats() {
           <ChatList />
         </Grid>
         <Grid item xs={8} container direction="column" justifyContent="flex-end">
-          <MessageList list={messageList}/>
+          {/* <MessageList list={messageList} chatId={chatId}/> */}
+          <MessageList chatId={chatId}/>
           <div className="app__form-wrapper">
-            <InputMessage value={value} updateMessageList={updateMessageList} handleChange={handleChange}/>
+            <InputMessage value={value} addMessage={addMessage} handleChange={handleChange}/>
           </div>
         </Grid>
       </Grid>
