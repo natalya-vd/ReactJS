@@ -1,8 +1,9 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 
 import { getMessageListSelector } from '../../store/messages/selectors';
+import { getChatListSelector } from '../../store/chats/selectors';
 import { addMessageWithMiddleware } from '../../store/messages/actions';
 
 import { Chats } from '../../pages/Chats';
@@ -14,7 +15,10 @@ export function ChatsContainer() {
 
     const [value, setValue] = useState('');
 
-    const messageListInitial = useSelector(getMessageListSelector);
+    const getSelectedMessageList = useMemo(() => getMessageListSelector(chatId), [chatId]);
+    const messageListInitial = useSelector(getSelectedMessageList);
+
+    const chatList = useSelector(getChatListSelector);
     
     const dispatch = useDispatch();
 
@@ -23,17 +27,17 @@ export function ChatsContainer() {
         setValue('');      
     }, [messageListInitial, value, dispatch]);
 
-    if(!serchChat(messageListInitial, chatId)) {
+    if(!serchChat(chatList, chatId)) {
         return <Redirect to="/nochat" />;
     };
 
     function serchChat(listChats, chatId) {
         let message = false;
-        for(let chat in listChats) {
-        if(+chat === +chatId) {
-            message = true;
-        }
-        };
+        listChats.forEach((item) => {
+            if(item.chatId === +chatId) {
+                message = true;
+            };
+        });
         return message;
     };
 

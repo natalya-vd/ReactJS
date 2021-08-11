@@ -4,7 +4,6 @@ import List from '@material-ui/core/List';
 import { Button } from '@material-ui/core';
 
 export function ChatList(props) {
-    console.log(props.usersChat)
     return(
         <div>
             <Button 
