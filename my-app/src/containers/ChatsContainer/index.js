@@ -22,9 +22,11 @@ export function ChatsContainer() {
     
     const dispatch = useDispatch();
 
-    const addMessage = useCallback(() => {
+    const addMessage = useCallback((e) => {
+        e.preventDefault();
+
         dispatch(addMessageWithMiddleware(chatId, { text: value, author: userName1}));
-        setValue('');      
+        setValue('');   
     }, [messageListInitial, value, dispatch]);
 
     if(!serchChat(chatList, chatId)) {
