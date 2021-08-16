@@ -1,4 +1,4 @@
-import '../scss/message.scss';
+import './message.scss';
 
 export const Message = (props) => {
     return(
