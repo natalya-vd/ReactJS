@@ -1,5 +1,5 @@
-import { ChatList } from '../../components/ChatList';
 import { Header } from '../../components/Header';
+import { ChatListContainer } from '../../containers/ChatListContainer';
 
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
@@ -10,7 +10,7 @@ export function NoChat() {
             <Header/>
             <Grid container className="app">
                 <Grid item xs={4}>
-                    <ChatList />
+                    <ChatListContainer />
                 </Grid>
                 <Grid item xs={8} container direction="column" justifyContent="flex-end">
                     <p>

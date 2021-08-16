@@ -1,18 +1,17 @@
 import { Header } from '../../components/Header';
-import Container from '@material-ui/core/Container';
+import { CommentsContainer } from '../../containers/CommentsContainer';
 
-export function Profile(props) {
+import Container from '@material-ui/core/Container';
+//import { Button } from '@material-ui/core/Button';
+
+export function Comments() {
     return(
         <Container maxWidth="lg">
             <Header/>
             <h1>
-                Профиль
+                Комментарии
             </h1>
-            <input 
-                type="checkbox"
-                checked={ props.checked }
-                onChange={ props.setChecked }
-            />
+            < CommentsContainer />
         </Container>
     );
 };
