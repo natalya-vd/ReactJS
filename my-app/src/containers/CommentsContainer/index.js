@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { CircularProgress } from '@material-ui/core';
 
-import { getCommentsSelector, getCommentsSelectorError, getCommentsSelectorLoading } from '../../store/comments';
-import { getAllComments } from '../../api/requests/comments';
+import { getCommentsSelector, getCommentsSelectorError, getCommentsSelectorLoading, getAllComments } from '../../store/comments';
 
 export function CommentsContainer() {
   

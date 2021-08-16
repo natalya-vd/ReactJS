@@ -23,19 +23,11 @@ const rootReducer = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const middleware = (store) => (dispatch) => (action) => {
-    if (typeof action === 'function') {
-        return action(store.dispatch, store.getState);
-    }
-
-    return dispatch(action);
-};
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const store = createStore(
     persistedReducer,
-    composeEnhancers(applyMiddleware(middleware, thunk))
+    composeEnhancers(applyMiddleware(thunk))
 );
 
 export const persistor = persistStore(store);
