@@ -1,4 +1,4 @@
-import { ChatList } from './components/ChatList';
+import { ChatListContainer } from './containers/ChatListContainer';
 import { Header } from './components/Header';
 import './App.scss';
 
@@ -11,7 +11,7 @@ function App() {
       <Header/>
       <Grid container className="app">
         <Grid item xs={4}>
-          <ChatList />
+        <ChatListContainer />
         </Grid>
         <Grid item xs={8} container direction="column" justifyContent="flex-end">
         </Grid>
