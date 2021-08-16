@@ -11,7 +11,7 @@ export const InputMessage = (props) => {
     });
 
     return(
-        <form className="input-message">
+        <form className="input-message" action="#">
             <TextField
                 id="standard-full-width"
                 style={{ margin: 8 }}
@@ -24,7 +24,7 @@ export const InputMessage = (props) => {
                 inputRef={inputRef}
                 value={props.value} onChange={props.handleChange}
             />
-            <Button variant="contained" color="primary" type="button" onClick={props.updateMessageList}>
+            <Button variant="contained" color="primary" type="submit" onClick={props.addMessage}>
                 Отправить
             </Button>
         </form>

@@ -28,6 +28,13 @@ export function Header() {
                         </Link>
                     </ListItem>
                 </Grid>
+                <Grid item>
+                    <ListItem>
+                        <Link to="/comments">
+                            Комментарии
+                        </Link>
+                    </ListItem>
+                </Grid>
             </Grid>
         </List>
     );

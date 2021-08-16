@@ -6,9 +6,10 @@ import {
 
 import App from '../../App';
 import { Home } from '../../pages/Home';
-import { Chats } from '../../pages/Chats';
-import { Profile } from '../../pages/Profile';
+import { ChatsContainer } from '../../containers/ChatsContainer';
+import { ProfileContainer } from '../../containers/ProfileContainer';
 import { NoChat } from '../../pages/NoChat';
+import { Comments } from '../../pages/Comments';
 
 export function Routes() {
     return(
@@ -24,15 +25,19 @@ export function Routes() {
 
                 <Route 
                 path="/chats/:chatId"
-                component={Chats}
+                component={ ChatsContainer }
                 />
 
                 <Route path="/profile">
-                    <Profile />
+                    <ProfileContainer />
                 </Route>
 
                 <Route path="/nochat">
                     <NoChat />
+                </Route>
+
+                <Route path="/comments">
+                    <Comments />
                 </Route>
 
                 <Route>

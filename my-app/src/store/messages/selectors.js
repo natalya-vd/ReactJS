@@ -1,3 +1,3 @@
-export function getMessageListSelector(state) {
-    return state.messages.messagesList;
+export function getMessageListSelector(chatId) {
+    return (state) => state.messages.messagesList[chatId];
 };
