@@ -9,6 +9,7 @@ import { Home } from '../../pages/Home';
 import { ChatsContainer } from '../../containers/ChatsContainer';
 import { ProfileContainer } from '../../containers/ProfileContainer';
 import { NoChat } from '../../pages/NoChat';
+import { Comments } from '../../pages/Comments';
 
 export function Routes() {
     return(
@@ -33,6 +34,10 @@ export function Routes() {
 
                 <Route path="/nochat">
                     <NoChat />
+                </Route>
+
+                <Route path="/comments">
+                    <Comments />
                 </Route>
 
                 <Route>
