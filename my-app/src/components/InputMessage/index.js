@@ -1,4 +1,4 @@
-import '../scss/input-message.scss';
+import './input-message.scss';
 import { useRef, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -24,7 +24,7 @@ export const InputMessage = (props) => {
                 inputRef={inputRef}
                 value={props.value} onChange={props.handleChange}
             />
-            <Button variant="contained" color="primary" type="submit" onClick={props.updateMessageList}>
+            <Button variant="contained" color="primary" type="submit" onClick={props.addMessage}>
                 Отправить
             </Button>
         </form>
