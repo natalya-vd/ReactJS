@@ -22,7 +22,6 @@ export function Routes() {
     const [auth, setAuth] = useState(false);
 
     useEffect(() => {
-        console.dir(firebase)
         firebase.auth().onAuthStateChanged((user) => {
         if (user) {
             setAuth(true);
@@ -74,45 +73,6 @@ export function Routes() {
                         Страница не найдена
                     </p>
                 </PublicRoute>
-
-                {/* <Route exact path="/">
-                    <Home />
-                </Route>
-
-                <Route exact path="/login">
-                    <Login />
-                </Route>
-
-                <Route exact path="/signup">
-                    <SignUp />
-                </Route>
-                    
-                <Route exact path="/chats">
-                    <App />
-                </Route>
-
-                <Route 
-                path="/chats/:chatId"
-                component={ ChatsContainer }
-                />
-
-                <Route path="/profile">
-                    <ProfileContainer />
-                </Route>
-
-                <Route path="/nochat">
-                    <NoChat />
-                </Route>
-
-                <Route path="/comments">
-                    <Comments />
-                </Route>
-
-                <Route >
-                    <p>
-                        Страница не найдена
-                    </p>
-                </Route> */}
             </Switch>
         </Router>   
     )

@@ -41,7 +41,7 @@ export const Login = () => {
         </div>
         <div>
             <input
-            placeholder="Password"
+            placeholder="Пароль"
             name="password"
             onChange={handlePassChange}
             value={password}

@@ -1,3 +1,3 @@
 export function getChatListSelector(state) {
-    return state.chats.chatsList;
+    return state.chats.chatsList || [];
 };

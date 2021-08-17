@@ -4,9 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { getMessageListSelector } from '../../store/messages/selectors';
 import { getChatListSelector } from '../../store/chats/selectors';
-import { addMessageWithMiddleware } from '../../store/messages/actions';
+import { createAddMessage } from '../../store/messages/actions';
 
 import { Chats } from '../../pages/Chats';
+import { messagesApi } from '../../api/request/messages';
+
+import '../../services/firebase';
 
 const userName1 = 'Наташа';
 
@@ -14,6 +17,7 @@ export function ChatsContainer() {
     const { chatId } = useParams();
 
     const [value, setValue] = useState('');
+    const [error, setError] = useState("");
 
     const getSelectedMessageList = useMemo(() => getMessageListSelector(chatId), [chatId]);
     const messageListInitial = useSelector(getSelectedMessageList);
@@ -21,12 +25,19 @@ export function ChatsContainer() {
     const chatList = useSelector(getChatListSelector);
     
     const dispatch = useDispatch();
-
-    const addMessage = useCallback((e) => {
+        
+    const addMessage = useCallback(async (e) => {
         e.preventDefault();
+        
+        dispatch(createAddMessage(chatId, { text: value, author: userName1}))
 
-        dispatch(addMessageWithMiddleware(chatId, { text: value, author: userName1}));
-        setValue('');   
+        try {            
+            await messagesApi.createMessages(chatId, { text: value, author: userName1});     
+        } catch (e) {
+            setError(e);
+        }
+
+        setValue(''); 
     }, [messageListInitial, value, dispatch]);
 
     if(!serchChat(chatList, chatId)) {

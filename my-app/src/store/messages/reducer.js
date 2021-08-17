@@ -16,7 +16,7 @@ export const messagesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...state.messagesList[action.payload.chatId].push(action.payload.message),
-        };
+            }    
 
         default: 
             return state;
