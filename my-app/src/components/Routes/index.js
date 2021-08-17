@@ -4,47 +4,75 @@ import {
     Route
 } from "react-router-dom";
 
+import { useState, useEffect } from 'react';
+import firebase from "firebase";
+
 import App from '../../App';
 import { Home } from '../../pages/Home';
 import { ChatsContainer } from '../../containers/ChatsContainer';
 import { ProfileContainer } from '../../containers/ProfileContainer';
 import { NoChat } from '../../pages/NoChat';
 import { Comments } from '../../pages/Comments';
+import { Login } from '../../pages/Login';
+import { SignUp } from '../../pages/SignUp';
+import { PrivateRoute } from '../../hocs/PrivateRoute';
+import { PublicRoute } from '../../hocs/PublicRoute';
 
 export function Routes() {
+    const [auth, setAuth] = useState(false);
+
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            setAuth(true);
+        } else {
+            setAuth(false);
+        }
+        })
+    }, []);
+
     return(
         <Router>
             <Switch>
-                <Route exact path="/">
+                <PublicRoute authenticated={auth} exact path="/">
                     <Home />
-                </Route>
-                    
-                <Route exact path="/chats">
-                    <App />
-                </Route>
+                </PublicRoute>
 
-                <Route 
+                <PublicRoute authenticated={auth} exact path="/login">
+                    <Login />
+                </PublicRoute>
+
+                <PublicRoute authenticated={auth} exact path="/signup">
+                    <SignUp />
+                </PublicRoute>
+                    
+                <PrivateRoute authenticated={auth} exact path="/chats">
+                    <App />
+                </PrivateRoute>
+
+                <PrivateRoute 
+                authenticated={auth}
                 path="/chats/:chatId"
                 component={ ChatsContainer }
                 />
 
-                <Route path="/profile">
+                <PrivateRoute authenticated={auth} path="/profile">
                     <ProfileContainer />
-                </Route>
+                </PrivateRoute>
 
-                <Route path="/nochat">
+                <PrivateRoute authenticated={auth} path="/nochat">
                     <NoChat />
-                </Route>
+                </PrivateRoute>
 
-                <Route path="/comments">
+                <PublicRoute authenticated={auth} path="/comments">
                     <Comments />
-                </Route>
+                </PublicRoute>
 
-                <Route>
+                <PublicRoute authenticated={auth}>
                     <p>
                         Страница не найдена
                     </p>
-                </Route>
+                </PublicRoute>
             </Switch>
         </Router>   
     )

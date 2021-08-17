@@ -4,8 +4,20 @@ import './App.scss';
 
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
+import { useDispatch } from 'react-redux';
+import { initPostsTracking } from './store/messages';
+import { useEffect } from 'react';
+import { initChatsTracking } from './store/chats/actions';
 
 function App() {
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(initPostsTracking())
+
+    dispatch(initChatsTracking())
+  }, [])
+
   return (
     <Container maxWidth="lg" >
       <Header/>

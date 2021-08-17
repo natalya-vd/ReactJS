@@ -1,5 +1,5 @@
 import { InputMessage } from '../../components/InputMessage';
-import { MessageList } from '../../components/MessageList';
+import { MessageListContainer } from '../../containers/MessageListContainer';
 import { ChatListContainer } from '../../containers/ChatListContainer'
 import { Header } from '../../components/Header';
 import '../../App.scss';
@@ -13,10 +13,10 @@ export function Chats(props) {
       <Header/>
       <Grid container className="app">
         <Grid item xs={4}>
-          <ChatListContainer />
+          <ChatListContainer chatId = { props.chatId } />
         </Grid>
         <Grid item xs={8} container direction="column" justifyContent="flex-end">
-          <MessageList chatId={props.chatId}/>
+          <MessageListContainer chatId={props.chatId}/>
           <div className="app__form-wrapper">
             <InputMessage value={props.value} addMessage={props.addMessage} handleChange={props.handleChange}/>
           </div>
