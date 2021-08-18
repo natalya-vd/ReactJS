@@ -11,7 +11,7 @@ export const initialState = {
 };
 
 export const messagesReducer = (state = initialState, action) => {
-    switch(action.type) {
+    switch(action?.type) {
         case ADD_MESSAGE:
             return {
                 ...state,
